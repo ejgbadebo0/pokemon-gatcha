@@ -1,0 +1,53 @@
+body {
+    background-image: url(https://pm1.narvii.com/6128/b08513b5aeaf14a72354b6d1ab234fa69cdf0f4a_hq.jpg); 
+    background-repeat: no-repeat;  
+    background-size: cover;
+}
+
+.left {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+}
+
+.right {
+    position: absolute;
+    top: 30%;
+    right: 5%;
+}
+
+.middle {
+    position: absolute;
+    top: 20%;
+    left: 40%;
+}
+
+.pokeball {
+    position: relative;
+    background-image: url(https://static.wikia.nocookie.net/pokemon/images/8/87/Pok%C3%A9_Ball.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    height: 200px;
+    width: 200px;
+}
+
+.pokeball > p {
+    position: relative;
+    top: 30%;
+    text-align: center;
+    font-family: "Pokemon Solid";
+    font-size: 50px;
+    font-stretch: expanded;
+    color:yellow;
+    border: black;
+}
+
+li {
+    background-color:rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+@font-face {
+    font-family: "Pokemon Solid";
+    src: url("fonts/Pokemon Solid.ttf");
+}

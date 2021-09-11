@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+{% block content %}
+<h2>Account Info:</h2>
+<ul>
+    <li>Username: {{user.username}}</li>
+    <li>Pokemon Collected: {{pokemon}} / {{total}}</li>
+</ul>
+
+<a href='/landing'><input type='button' value='Main'></a>
+{% endblock %}

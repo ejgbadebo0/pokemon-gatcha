@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% block content %}
+<h2>Pokedex:</h2>
+<a href='/landing'><input type='button' value='Main'></a>
+<div class="container">
+    <div class="row row-cols-3">
+    {% for p in pokemon.items %}
+      <div class="col-sm-3">
+        <a href='/pokedex/{{p.id}}'><img src="{{ p.image }}" alt="{{ p.name }}" class="img-thumbnail"></a>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+{% for page_num in pokemon.iter_pages() %}
+    {% if page_num %}
+        {% if pokemon.page == page_num %}
+            <a class="btn btn-primary sm-3" href="{{ url_for('pokedex', page=page_num)}}">{{ page_num }}</a>
+        {% else %}
+            <a class="btn btn-secondary sm-3" href="{{ url_for('pokedex', page=page_num)}}">{{ page_num }}</a>
+        {% endif %}
+    {% else %}
+        ...
+    {% endif %}
+{% endfor %}
+<a href='/landing'><input type='button' value='Main'></a>
+{% endblock %}
+

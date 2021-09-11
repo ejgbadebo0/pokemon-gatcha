@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% block content %}
+<h2>Capture Details:</h2>
+<a href='/capture'><input type='button' value='Back to Capture'></a>
+<p>You can capture Pokemon by pressing the <span style=color:red;'>1x</span> or <span style=color:red;'>10x</span>
+  buttons. Each button will allow you to perform one or ten captures at a time, respectively. Each Pokemon is categorized by
+  R, SR, and SSR rarity and the standard probability of drawing each type is as follows:
+</p>
+<li style=color:red;'>R: 85.00%</li>
+<li style='color:silver;'>SR: 11.00%</li>
+<li style='color:gold;'>SSR: 4.00%</li>
+<p>The probability of capturing each individual Pokemon within a particular rarity is equally weighted. 
+  Performing a <span style=color:red;'>10x</span> pull will guarantee that at least one of the Pokemon captured will be of an 
+  SR rarity or higher. Performing a <span style=color:red;'>1x</span> pull ten times will not produce the same effect.
+</p>
+
+<h3>Obtainable Pokemon:</h3>
+<ol>
+  {% for p in pokemon %}
+    {% if p.rarity == 'R' %}
+      <li style=color:red;'>{{ repr(p) }}</li>
+    {% elif p.rarity == 'SR' %}
+      <li style='color:silver;'>{{ repr(p) }}</li>
+    {% elif p.rarity == 'SSR' %}
+      <li style='color:gold;'>{{ repr(p) }}</li>
+    {% endif %}
+  {% endfor %}
+  </ol>
+<a href='/capture'><input type='button' value='Back to Capture'></a>
+{% endblock %}

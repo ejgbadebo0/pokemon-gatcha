@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% block content %}
+<link rel="stylesheet" href={{ url_for('static', filename="styles/gacha.css") }}>
+<script src="{{ url_for('static', filename='gacha.js') }}"></script>
+
+<h1>Click to Capture!</h1>
+<h2></h2>
+
+<div class="scene">
+    <div class="carousel">
+      {% for p in pokemon %}
+      <div class="carousel__cell">
+        <img class='ball' src='{{ get_rarity(p.rarity) }}'></img>
+        <p> {{repr(p)}} </p>
+        <img class='captured' src='{{ p.image }}'></img>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+
+
+<a href='/'><input type='button' value='Home'></a>
+{% endblock %}

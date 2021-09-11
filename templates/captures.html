@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% block content %}
+<h2>You got:</h2>
+<ol>
+{% for p in pokemon %}
+  {% if p.rarity == 'R' %}
+    <li style=color:red;'>{{ repr(p) }}</li>
+  {% elif p.rarity == 'SR' %}
+    <li style='color:silver;'>{{ repr(p) }}</li>
+  {% elif p.rarity == 'SSR' %}
+    <li style='color:gold;'>{{ repr(p) }}</li>
+  {% endif %}
+{% endfor %}
+</ol>
+
+
+<a href='/one_pull'><input type='button' value='1x'></a>
+<a href='/multi_pull'><input type='button' value='10x'></a>
+
+<a href='/landing'><input type='button' value='Main'></a>
+
+{% endblock %}

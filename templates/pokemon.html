@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+<h2>{{pokemon.name}}:</h2>
+
+<img src='{{pokemon.image}}' alt="{{ pokemon.name }}" class="img-fluid">
+<div class="pokemon-bio">
+    <ul>
+        <li>#{{pokemon_id}}</li>
+        {% if pokemon.subtype %}
+            <li>Types: 
+            <ul>
+                <li> {{pokemon.type}} </li>
+                <li> {{pokemon.subtype }}</li>
+            </ul>
+            </li>
+        {% else %}
+            <li>Type: 
+            <ul>
+                <li> {{pokemon.type}} </li>
+            </ul>
+            </li>
+        {% endif %}
+        <li>Rarity: {{ pokemon.rarity }}</li>
+    </ul>
+</div>
+
+<a href='/landing'><input type='button' value='Main'></a>
+<a href='/pokedex'><input type='button' value='Back to Pokedex'></a>
+{% endblock %}

@@ -1,0 +1,90 @@
+body {
+    background-color: rgb(7, 5, 19);
+    background-image: url(https://i.ibb.co/mSvjMRh/pokemonspotlight.jpg);
+    background-position: center top;
+    background-size: 80%;
+}
+
+h1 {
+    position: absolute;
+    text-align: center;
+    left: 35%;
+    top: 5%;
+    font-family: "Pokemon Solid";
+    color: yellow;
+    animation-name: blink;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: yellow;
+    position: absolute;
+    text-align: center;
+    left: 35%;
+    top: 20%;
+}
+
+p {
+    visibility: hidden;
+}
+
+.scene {
+    width: 105px;
+    height: 70px;
+    position: absolute;
+    left: 40%;
+    top: 60%;
+    perspective: 1000px;
+}
+  
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+}
+  
+.carousel__cell {
+    position: absolute;
+    width: 190px;
+    height: 120px;
+    left: 10px;
+    top: 10px;
+}
+.carousel__cell:nth-child(1) { transform: rotateY(  0deg) translateZ(320px); }
+.carousel__cell:nth-child(2) { transform: rotateY( 36deg) translateZ(320px); }
+.carousel__cell:nth-child(3) { transform: rotateY( 72deg) translateZ(320px); }
+.carousel__cell:nth-child(4) { transform: rotateY(108deg) translateZ(320px); }
+.carousel__cell:nth-child(5) { transform: rotateY(144deg) translateZ(320px); }
+.carousel__cell:nth-child(6) { transform: rotateY(180deg) translateZ(320px); }
+.carousel__cell:nth-child(7) { transform: rotateY(216deg) translateZ(320px); }
+.carousel__cell:nth-child(8) { transform: rotateY(252deg) translateZ(320px); }
+.carousel__cell:nth-child(9) { transform: rotateY(288deg) translateZ(320px); }
+.carousel__cell:nth-child(10){ transform: rotateY(324deg) translateZ(320px); }
+
+.ball {
+    width: 50%;
+    height: 50%;
+}
+
+.captured {
+    width: inherit;
+    height: inherit;
+    position: absolute;
+    left: 0px;
+    bottom: 60%;
+    visibility: hidden;
+}
+
+@keyframes blink {
+    0% {opacity: 0;}
+    50% { opacity: 1;}
+    100% { opacity: 0;}
+}
+
+@font-face {
+    font-family: "Pokemon Solid";
+    src: url("fonts/Pokemon Solid.ttf");
+}
