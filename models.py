@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask import jsonify
 from sqlalchemy.orm import backref
 from datetime import datetime
 
@@ -44,6 +45,16 @@ class Pokemon(db.Model):
     image = db.Column(db.Text, nullable=False)
 
     captures = db.relationship('Capture', backref='pokemon', lazy=True)
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'type': self.type,
+            'subtype': self.subtype,
+            'rarity': self.rarity,
+            'image': self.image
+        }
     
     def __repr__(self):
         if self.subtype:

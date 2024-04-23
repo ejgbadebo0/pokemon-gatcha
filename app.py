@@ -2,23 +2,30 @@ from forms import RegisterForm, LoginForm
 from flask import Flask, render_template, redirect, request, session, jsonify, flash
 from flask_debugtoolbar import DebugToolbarExtension
 import requests, random, copy, datetime
+import os
 
 from models import db, connect_db, Pokemon, User, Capture
 
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///pokemon_gatcha'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql:///pokemon_gatcha')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-app.config['SECRET_KEY'] = "SECRETKEY"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'SECRETKEY')
 
 connect_db(app)
 db.create_all()
 
 toolbar = DebugToolbarExtension(app)
 
+# Issue1: Pokemon can have duplicates in the Pokedex when summoned
+# Issue2: On computer devices, when using Capture, the animation 
+#         and result screen show different results. (runs twice)
+#         *when done on a mobile device, only runs one time?*
+# TestAcc1: FishMan123 pass: trilobite
+# TestAcc2: exampleuser1 pass: password1
 #------------------------
 #Draw Rates 
 base_r = 85
@@ -39,7 +46,20 @@ ex_pkm = 'https://pokeres.bastionbot.org/images/pokemon/1.png'
 #Misc
 
 #------------------------
+#API
 
+@app.route('/api/pokemon')
+def get_pokemon():
+    """
+    Get all Pokemon in the database.
+    """
+    pokemon = [p.serialize() for p in Pokemon.query.all()]
+    return jsonify(pokemon=pokemon)
+    
+
+
+#------------------------
+#Main
 @app.route('/')
 def default():
     """
@@ -233,7 +253,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
 
-            return render_template('/users.html')
+            return render_template('/base.html')
 
     return render_template('/register.html', form=form)
 
