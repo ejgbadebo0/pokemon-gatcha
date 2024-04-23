@@ -45,18 +45,6 @@ ex_pkm = 'https://pokeres.bastionbot.org/images/pokemon/1.png'
 #------------------------
 #Misc
 
-#------------------------
-#API
-
-@app.route('/api/pokemon')
-def get_pokemon():
-    """
-    Get all Pokemon in the database.
-    """
-    pokemon = [p.serialize() for p in Pokemon.query.all()]
-    return jsonify(pokemon=pokemon)
-    
-
 
 #------------------------
 #Main
@@ -278,7 +266,21 @@ def login_page():
             form.password.errors = ["Invalid username/password."]
 
     return render_template('login.html', form=form)
+
+#------------------------
+#API
+
+@app.route('/api/pokemon')
+def get_pokemon():
+    """
+    Get all Pokemon in the database.
+    """
+    pokemon = [p.serialize() for p in Pokemon.query.all()]
+    return jsonify(pokemon=pokemon)
     
+
+#------------------------
+#Helper
 
 def roll(r_rate, sr_rate, ssr_rate):
     """
@@ -308,3 +310,6 @@ def get_rarity(rarity):
         return sr_img
     if rarity == 'SSR':
         return ssr_img
+    
+
+    
