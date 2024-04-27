@@ -11,7 +11,7 @@ for m in range(1, m['count']):
     try:
         r = requests.get(f"{move_url}/{m}/")
         mov = r.json()
-        print(f'GET SUCCEEDED: {mov['id']}')
+        print(f"GET SUCCEEDED: {mov['id']}")
         m_name = format_move_name(mov['name'])
         print(m_name)
         m_power = int(mov['power'])
