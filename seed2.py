@@ -23,6 +23,7 @@ for m in range(1, m['count']):
                         accuracy=m_accuracy)
         db.session.add(new_move)
         print(new_move)
+        print(f"Owners: {len(mov['learned_by_pokemon'])}")
 
         for i in mov['learned_by_pokemon']:
             try:
@@ -31,7 +32,7 @@ for m in range(1, m['count']):
                 print(pkm_id)
 
                 if pokemon: 
-                    new_pokemon_move = PokemonMove(pokemon_id=int(pkm_id), move_id=m)
+                    new_pokemon_move = PokemonMove(pokemon_id=int(pkm_id), move_id=mov['id'])
                     db.session.add(new_pokemon_move)
             except: 
                 print('CANT ADD')
