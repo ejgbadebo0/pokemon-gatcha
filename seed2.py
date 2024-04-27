@@ -26,11 +26,13 @@ for m in range(1, m['count']):
 
         for i in mov['learned_by_pokemon']:
             try:
-                print(i['url'])
                 pkm_id = i['url'].replace(base_url,'').replace('/','')
-            
-                new_pokemon_move = PokemonMove(pokemon_id=int(pkm_id), move_id=m)
-                db.session.add(new_pokemon_move)
+                pokemon = Pokemon.query.get(pkm_id)
+                print(pkm_id)
+
+                if pokemon: 
+                    new_pokemon_move = PokemonMove(pokemon_id=int(pkm_id), move_id=m)
+                    db.session.add(new_pokemon_move)
             except: 
                 print('CANT ADD')
                 break  
