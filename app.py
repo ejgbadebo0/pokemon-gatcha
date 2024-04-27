@@ -4,7 +4,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 import requests, random, copy, datetime
 import os
 
-from models import db, connect_db, Pokemon, User, Capture
+from models import db, connect_db, Pokemon, User, Move, Capture, PokemonMove
 
 app = Flask(__name__)
 
@@ -53,7 +53,10 @@ def default():
     """
     Default route.
     """
-    return render_template('base.html')
+    if "user_id" in session:
+        return redirect('/landing')
+    else: 
+        return render_template('base.html')
 
 @app.route('/logout')
 def logout():
@@ -271,13 +274,50 @@ def login_page():
 #API
 
 @app.route('/api/pokemon')
-def get_pokemon():
+def get_all_pokemon():
     """
     Get all Pokemon in the database.
     """
     pokemon = [p.serialize() for p in Pokemon.query.all()]
     return jsonify(pokemon=pokemon)
+
+@app.route('/api/pokemon/<int:pid>')
+def get_pokemon(pid):
+    """
+    Get a Pokemon.
+    """
+    pokemon = Pokemon.query.get(pid)
+    return jsonify(pokemon=pokemon)
+
+@app.route('/api/move')
+def get_all_moves():
+    """
+    Get all Pokemon moves.
+    """
+    moves = [m.serialize() for m in Move.query.all()]
+    return jsonify(moves=moves)
     
+@app.route('/api/move/<int:mid>')
+def get_pokemon(mid):
+    """
+    Get a Move.
+    """
+    move = Pokemon.query.get(mid)
+    return jsonify(move=move)
+
+@app.route('/api/pokemon/<int:pid>/moves')
+def get_pokemon_moves(pid):
+    """
+    Get the list of moves a Pokemon owns.
+    """
+    pokemon = Pokemon.query.get(pid)
+    moves = Move.query \
+            .join(PokemonMove) \
+            .filter((PokemonMove.pokemon_id == pid) & (PokemonMove.move_id == Move.id)) \
+            .distinct() \
+            .order_by(Move.id)
+
+    return jsonify(pokemon_moves=moves)
 
 #------------------------
 #Helper

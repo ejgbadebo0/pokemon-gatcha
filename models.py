@@ -32,6 +32,12 @@ def assign_rarity(num):
     if num >= 200:
         return 'SSR'
     
+def format_move_name(txt):
+    x = txt.rsplit("-")
+    y = [ s.capitalize() for s in x ]
+    z = " ".join(y)
+    return z
+    
 class Pokemon(db.Model):
     """Pokemon."""
 
@@ -45,6 +51,7 @@ class Pokemon(db.Model):
     image = db.Column(db.Text, nullable=False)
 
     captures = db.relationship('Capture', backref='pokemon', lazy=True)
+    moves = db.relationship('PokemonMove', backref='pokemon', lazy=True)
     
     def serialize(self):
         return {
@@ -61,6 +68,33 @@ class Pokemon(db.Model):
             return f"[{self.rarity}] {self.name} ({self.type}/{self.subtype})"
         else:
             return f"[{self.rarity}] {self.name} ({self.type})"
+        
+
+class Move(db.Model):
+    """Move."""
+
+    __tablename__ = "moves"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Text, nullable=False)
+    power = db.Column(db.Integer, nullable=False)
+    pp = db.Column(db.Integer, nullable=False)
+    accuracy = db.Column(db.Integer, nullable=False)
+
+    owners = db.relationship('PokemonMove', backref='moves', lazy=True)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'power': self.power,
+            'pp': self.pp,
+            'accuracy': self.accuracy
+        }
+
+    def __repr__(self):
+        return f"{self.name} - Power: {self.power}, PP Cost: {self.pp}, Hit Rate: {self.accuracy}%"
+        
 
 class User(db.Model):
     """User."""
@@ -97,6 +131,15 @@ class Capture(db.Model):
     time_captured = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'))
+
+class PokemonMove(db.Model):
+    """Pokemon Move."""
+
+    __tablename__ = "pokemon_moves"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'))
+    move_id = db.Column(db.Integer, db.ForeignKey('moves.id'))
 
 
 def connect_db(app):
