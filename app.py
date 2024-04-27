@@ -298,7 +298,7 @@ def get_all_moves():
     return jsonify(moves=moves)
     
 @app.route('/api/move/<int:mid>')
-def get_pokemon(mid):
+def get_move(mid):
     """
     Get a Move.
     """
