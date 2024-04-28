@@ -302,7 +302,7 @@ def get_move(mid):
     """
     Get a Move.
     """
-    move = Pokemon.query.get(mid).serialize()
+    move = Move.query.get(mid).serialize()
     return jsonify(move=move)
 
 @app.route('/api/pokemon/<int:pid>/moves')
@@ -310,7 +310,7 @@ def get_pokemon_moves(pid):
     """
     Get the list of moves a Pokemon owns.
     """
-    pokemon = Pokemon.query.get(pid)
+    pokemon = Pokemon.query.get_or_404(pid)
     moves = [m.serialize() for m in Move.query \
             .join(PokemonMove) \
             .filter((PokemonMove.pokemon_id == pid) & (PokemonMove.move_id == Move.id)) \
