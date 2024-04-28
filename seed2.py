@@ -4,6 +4,8 @@ from models import User, Pokemon, assign_rarity, Move, format_move_name, Pokemon
 base_url = "https://pokeapi.co/api/v2/pokemon"
 move_url = "https://pokeapi.co/api/v2/move"
 
+
+
 r2 = requests.get(move_url)
 m = r2.json()
 
@@ -24,26 +26,25 @@ for m in range(1, m['count']):
                         power=m_power,
                         pp=m_pp,
                         accuracy=m_accuracy)
-        db.session.add(new_move)
-        print(new_move)
-        print(f"Owners: {len(mov['learned_by_pokemon'])}")
+        if new_move:
+            db.session.add(new_move)
+            print(new_move)
+            print(f"Owners: {len(mov['learned_by_pokemon'])}")
 
-        for i in mov['learned_by_pokemon']:
-            try:
-                pkm_id = i['url'].replace(base_url,'').replace('/','')
-                print(f"PID:<{pkm_id}>")
-                q_pokemon = Pokemon.query.get(int(pkm_id))
-                print(f"GOT:<{q_pokemon.id}>")
-                if q_pokemon: 
-                    new_pokemon_move = PokemonMove(pokemon_id=q_pokemon.id, move_id=new_move.id)
-                    db.session.add(new_pokemon_move)
-            except: 
-                print('CANT ADD')
-                break  
+            for i in mov['learned_by_pokemon']:
+                try:
+                    pkm_id = i['url'].replace(base_url,'').replace('/','')
+                    print(f"PID:<{pkm_id}>")
+                    q_pokemon = Pokemon.query.get(int(pkm_id))
+                    print(f"GOT:<{q_pokemon.id}>")
+                    if q_pokemon: 
+                        new_pokemon_move = PokemonMove(pokemon_id=q_pokemon.id, move_id=new_move.id)
+                        db.session.add(new_pokemon_move)
+                except: 
+                    print('CANT ADD')  
 
     except: 
         print('INVALID MOVE')
-        break
 
 
 db.session.commit()
