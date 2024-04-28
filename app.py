@@ -326,8 +326,8 @@ def external_login():
     """
     username = request.json["username"]
     password = request.json["password"]
-    #user = User.authenticate(username, password)
-
+    user = User.authenticate(username, password)
+    result = True if user else False
     #if username:
         #pokemon = [p.serialize() for p in Pokemon.query \
         #        .join(Capture) \
@@ -338,7 +338,7 @@ def external_login():
         #return jsonify(message={"result": "authorized"})
         
     #else:
-    return jsonify(message={"result": "unauthorized"})
+    return jsonify(message={"result": result })
 
 #------------------------
 #Helper
