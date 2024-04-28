@@ -279,7 +279,9 @@ def get_all_pokemon():
     Get all Pokemon in the database.
     """
     pokemon = [p.serialize() for p in Pokemon.query.all()]
-    return jsonify(pokemon=pokemon)
+    response = jsonify(pokemon=pokemon)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route('/api/pokemon/<int:pid>')
 def get_pokemon(pid):
@@ -287,7 +289,9 @@ def get_pokemon(pid):
     Get a Pokemon.
     """
     pokemon = Pokemon.query.get(pid).serialize()
-    return jsonify(pokemon=pokemon)
+    response = jsonify(pokemon=pokemon)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route('/api/move')
 def get_all_moves():
@@ -295,7 +299,9 @@ def get_all_moves():
     Get all Pokemon moves.
     """
     moves = [m.serialize() for m in Move.query.all()]
-    return jsonify(moves=moves)
+    response = jsonify(moves=moves)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
     
 @app.route('/api/move/<int:mid>')
 def get_move(mid):
@@ -303,7 +309,9 @@ def get_move(mid):
     Get a Move.
     """
     move = Move.query.get(mid).serialize()
-    return jsonify(move=move)
+    response = jsonify(move=move)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route('/api/pokemon/<int:pid>/moves')
 def get_pokemon_moves(pid):
@@ -317,7 +325,9 @@ def get_pokemon_moves(pid):
             .distinct() \
             .order_by(Move.id)]
 
-    return jsonify(pokemon_moves=moves)
+    response = jsonify(pokemon_moves=moves)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 @app.route('/api/login', methods=['GET', 'POST'])
 def external_login():
@@ -336,10 +346,14 @@ def external_login():
                 .order_by(Capture.time_captured.desc())]
         
         #return jsonify(message={"result": "authorized"})
-        return jsonify(message={"id": user.id, "username": user.username, "pokemon": pokemon })
+        response = jsonify(message={"id": user.id, "username": user.username, "pokemon": pokemon })
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+    
     else:
-        return jsonify(message={"result": result })
-
+        response = jsonify(message={"result": result })
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
 #------------------------
 #Helper
 
