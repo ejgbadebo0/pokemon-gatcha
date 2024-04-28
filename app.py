@@ -329,14 +329,14 @@ def external_login():
     user = User.authenticate(username, password)
     result = True if user else False
     if user:
-        #pokemon = [p.serialize() for p in Pokemon.query \
-        #        .join(Capture) \
-        #        .filter((Capture.user_id == user.id) & (Capture.pokemon_id == Pokemon.id)) \
-        #        .distinct() \
-        #        .order_by(Capture.time_captured.desc())]
+        pokemon = [p.serialize() for p in Pokemon.query \
+                .join(Capture) \
+                .filter((Capture.user_id == user.id) & (Capture.pokemon_id == Pokemon.id)) \
+                .distinct() \
+                .order_by(Capture.time_captured.desc())]
         
         #return jsonify(message={"result": "authorized"})
-        return jsonify(message={"id": user.id, "username": user.username })
+        return jsonify(message={"id": user.id, "username": user.username, "pokemon": pokemon })
     else:
         return jsonify(message={"result": result })
 
