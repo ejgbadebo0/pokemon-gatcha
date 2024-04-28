@@ -329,7 +329,7 @@ def get_pokemon_moves(pid):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-@app.route('/api/login', methods=['GET', 'POST'])
+@app.route('/api/login')
 def external_login():
     """
     Get user information from an external source.
