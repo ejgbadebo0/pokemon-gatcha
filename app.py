@@ -325,7 +325,7 @@ def external_login():
     Get user information from an external source.
     """
     username = request.json["username"]
-    #password = request.json["password"]
+    password = request.json["password"]
     #user = User.authenticate(username, password)
 
     #if username:
