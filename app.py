@@ -280,8 +280,7 @@ def get_all_pokemon():
     """
     pokemon = [p.serialize() for p in Pokemon.query.all()]
     response = jsonify(pokemon=pokemon)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return add_headers(response)
 
 @app.route('/api/pokemon/<int:pid>')
 def get_pokemon(pid):
@@ -290,8 +289,7 @@ def get_pokemon(pid):
     """
     pokemon = Pokemon.query.get(pid).serialize()
     response = jsonify(pokemon=pokemon)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return add_headers(response)
 
 @app.route('/api/move')
 def get_all_moves():
@@ -300,8 +298,7 @@ def get_all_moves():
     """
     moves = [m.serialize() for m in Move.query.all()]
     response = jsonify(moves=moves)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return add_headers(response)
     
 @app.route('/api/move/<int:mid>')
 def get_move(mid):
@@ -310,8 +307,7 @@ def get_move(mid):
     """
     move = Move.query.get(mid).serialize()
     response = jsonify(move=move)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return add_headers(response)
 
 @app.route('/api/pokemon/<int:pid>/moves')
 def get_pokemon_moves(pid):
@@ -326,8 +322,7 @@ def get_pokemon_moves(pid):
             .order_by(Move.id)]
 
     response = jsonify(pokemon_moves=moves)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    return add_headers(response)
 
 @app.route('/api/login')
 def external_login():
@@ -347,13 +342,11 @@ def external_login():
         
         #return jsonify(message={"result": "authorized"})
         response = jsonify(message={"id": user.id, "username": user.username, "pokemon": pokemon })
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response
+        return add_headers(response)
     
     else:
         response = jsonify(message={"result": result })
-        response.headers.add("Access-Control-Allow-Origin", "*")
-        return response
+        return add_headers(response)
 #------------------------
 #Helper
 
@@ -386,5 +379,12 @@ def get_rarity(rarity):
     if rarity == 'SSR':
         return ssr_img
     
+def add_headers(response):
+    """
+    Add headers to API response for CORS.
+    """
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Methods", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
 
-    
+    return response
