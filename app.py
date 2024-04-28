@@ -336,7 +336,7 @@ def external_login():
         #        .order_by(Capture.time_captured.desc())]
         
         #return jsonify(message={"result": "authorized"})
-        return jsonify(message={"result": user.id })
+        return jsonify(message={"id": user.id, "username": user.username })
     else:
         return jsonify(message={"result": result })
 
