@@ -324,21 +324,21 @@ def external_login():
     """
     Get user information from an external source.
     """
-    username = request.json['username']
-    password = request.json['password']
-    user = User.authenticate(username, password)
+    username = request.json["username"]
+    password = request.json["password"]
+    #user = User.authenticate(username, password)
 
-    if user:
+    if username:
         #pokemon = [p.serialize() for p in Pokemon.query \
         #        .join(Capture) \
         #        .filter((Capture.user_id == user.id) & (Capture.pokemon_id == Pokemon.id)) \
         #        .distinct() \
         #        .order_by(Capture.time_captured.desc())]
         
-        return jsonify(message="authorized")
+        return jsonify(message={"result": "authorized"})
         
     else:
-        return jsonify(message="unauthorized")
+        return jsonify(message={"result": "unauthorized"})
 
 #------------------------
 #Helper
