@@ -325,7 +325,7 @@ def get_pokemon_moves(pid):
     response = jsonify(pokemon_moves=moves)
     return add_headers(response)
 
-@app.route('/api/login')
+@app.route('/api/login', methods=['GET', 'POST'])
 def external_login():
     """
     Get user information from an external source.
