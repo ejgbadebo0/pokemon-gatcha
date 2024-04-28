@@ -1,13 +1,14 @@
 from forms import RegisterForm, LoginForm
 from flask import Flask, render_template, redirect, request, session, jsonify, flash
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_cors import CORS
 import requests, random, copy, datetime
 import os
 
 from models import db, connect_db, Pokemon, User, Move, Capture, PokemonMove
 
 app = Flask(__name__)
-
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql:///pokemon_gatcha')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
